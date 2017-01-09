@@ -9,11 +9,23 @@ group node['poc']['dir_grp'] do
 action :create
 end
 
-execute 'setting processes and file open limit' do
-command <<-EOH
-echo "dmp soft nproc 16534" >> /etc/security/limits.conf
-echo "dmp hard nproc 16534" >> /etc/security/limits.conf
-echo "dmp soft nofile 65536" >> /etc/security/limits.conf
-echo "dmp hard nofile 65536" >> /etc/security/limits.conf
-EOH
+max_process 'updating maximum process for user' do
+ usr 'dmp'
+ type 'soft'
+ value '1653'
+end
+max_process 'updating maximum process for user' do
+ usr 'dmp'
+ type 'hard'
+ value '1653'
+end
+open_files 'setting open file limit' do
+ usr 'dmp'
+ type 'soft'
+ value '6536'
+end
+open_files 'setting open file limit' do
+ usr 'dmp'
+ type 'hard'
+ value '6536'
 end
